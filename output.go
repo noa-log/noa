@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 10:59:01
- * @LastEditTime: 2025-06-08 15:47:09
+ * @LastEditTime: 2025-06-08 16:54:34
  * @LastEditors: nijineko
  * @Description: log output package
  * @FilePath: \noa\output.go
@@ -186,7 +186,7 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 	if l.Writer.Enable {
 		LogFileHandle, err := l.Writer.openFile()
 		if err != nil {
-			return
+			panic(err)
 		}
 
 		// Write log to file
