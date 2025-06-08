@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 11:03:48
- * @LastEditTime: 2025-06-08 12:38:05
+ * @LastEditTime: 2025-06-08 17:05:59
  * @LastEditors: nijineko
  * @Description: log file handle utility package
  * @FilePath: \noa\file.go
@@ -50,27 +50,13 @@ func (lcw *LogConfigWriter) openFile() (*os.File, error) {
  */
 func (lcw *LogConfigWriter) closeUnusedFiles() {
 	for fileName, fileHandle := range lcw.file {
-		Timestamp, err := time.Parse(lcw.TimeFormat, fileName)
-		if err != nil {
-			continue
-		}
+		FileNameTime := time.Now().Format(lcw.TimeFormat)
 
 		// Close file if it's not from today
-		if !isToday(Timestamp) {
+		if fileName != FileNameTime {
 			fileHandle.Close()
 			// Remove file handle from map
 			delete(lcw.file, fileName)
 		}
 	}
-}
-
-/**
- * @description: Check if the given time is today
- * @param {time.Time} Time Time to check
- * @return {bool} true if the time is today, false otherwise
- */
-func isToday(Time time.Time) bool {
-	YNow, MNow, DNow := time.Now().Date()
-	YTime, MTime, DTime := Time.Date()
-	return YNow == YTime && MNow == MTime && DNow == DTime
 }
