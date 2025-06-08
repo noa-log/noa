@@ -1,7 +1,7 @@
 # Configure Log Instance
 Noa supports highly flexible configuration options, allowing you to set the behavior of logging instances via code or configuration files.
 
-## 可用配置选
+## Configuration Options
 |      配置项       |           说明           |       默认值        |                                         备注                                         |
 | :---------------: | :----------------------: | :-----------------: | :----------------------------------------------------------------------------------: |
 |       Level       |        Log level         |      noa.DEBUG      | Supports `noa.DEBUG`, `noa.INFO`, `noa.WARNING`, `noa.ERROR`, `noa.FATAL`, `noa.OFF` |

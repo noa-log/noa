@@ -7,6 +7,7 @@ package main
 
 import (
     baseErrors "errors"
+    "github.com/noa-log/noa"
     "github.com/noa-log/noa/errors"
 )
 
@@ -15,7 +16,7 @@ func main() {
     logger := noa.NewLog()
 
     // Manually wrap an error
-    err := errors.Wrap(baseErrors.New("an example error"), 3)
+    err := errors.Wrap(baseErrors.New("an example error"), 2)
     
     // Print the wrapped error
     logger.Println(noa.ERROR, "Test", err)

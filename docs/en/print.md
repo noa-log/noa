@@ -48,6 +48,7 @@ Noa supports using the `Print()` and `Println()` methods to print custom log mes
 package main
 
 import (
+    "errors"
     "github.com/noa-log/noa"
 )
 

@@ -3,7 +3,7 @@ Noa supports the registration of handles, allowing you to insert custom logic be
 
 **Note**: Handle functions are executed in the order they are registered. Only the before handles can modify the log data.
 
-## 注册中间件示例
+## Example of Registering Handles
 ```go
 package main
 
@@ -33,7 +33,7 @@ func main() {
 
     // Register an after-handle, used to report log data
     logger.AddAfterHandle(func(Level int, Source string, Data ...any) error {
-        if Level == ERROR {
+        if Level == noa.ERROR {
             os.WriteFile("errors.log", []byte(fmt.Sprintf("%s: %v\n", Source, Data[0])), 0644)
         }
         return nil
