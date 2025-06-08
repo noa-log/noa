@@ -49,9 +49,8 @@ func (lcw *LogConfigWriter) openFile() (*os.File, error) {
  * @description: Close unused log files
  */
 func (lcw *LogConfigWriter) closeUnusedFiles() {
+	FileNameTime := time.Now().Format(lcw.TimeFormat)
 	for fileName, fileHandle := range lcw.file {
-		FileNameTime := time.Now().Format(lcw.TimeFormat)
-
 		// Close file if it's not from today
 		if fileName != FileNameTime {
 			fileHandle.Close()
