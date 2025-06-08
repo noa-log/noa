@@ -1,0 +1,39 @@
+# Configure Log Instance
+Noa supports highly flexible configuration options, allowing you to set the behavior of logging instances via code or configuration files.
+
+## 可用配置选
+|      配置项       |           说明           |       默认值        |                                         备注                                         |
+| :---------------: | :----------------------: | :-----------------: | :----------------------------------------------------------------------------------: |
+|       Level       |        Log level         |      noa.DEBUG      | Supports `noa.DEBUG`, `noa.INFO`, `noa.WARNING`, `noa.ERROR`, `noa.FATAL`, `noa.OFF` |
+|    RemoveColor    |       Remove color       |        false        |                     Removes all color parameters before printing                     |
+|    TimeFormat     |     Timestamp format     | 2006-01-02 15:04:05 |                                Uses Go's time format                                 |
+|  AutoLastNewline  | Smart newline appending  |        true         |     When using `Println()`, intelligently determines whether to append a newline     |
+| Errors.StackTrace | Print error stack trace  |        true         |                                                                                      |
+| Errors.CallerSkip |   Stack depth to skip    |          3          |                                                                                      |
+|   Writer.Enable   | Enable log file writing  |        true         |                                                                                      |
+| Writer.FolderPath |   Log file folder path   |       ./logs        |                                                                                      |
+| Writer.TimeFormat | Log filename time format |     2006-01-02      |                Uses Go's time format, affects automatic file rotation                |
+
+## Example of Modifying Configuration
+```go
+package main
+
+import (
+    "github.com/noa-log/noa"
+)
+
+func main() {
+    // Create a new logger instance
+    logger := noa.NewLog()
+
+    // Set log level to INFO
+    logger.Level = noa.INFO
+    // Remove log colors
+    logger.RemoveColor = true
+    // Set timestamp format for log prefix
+    logger.TimeFormat = "2006-01-02 15:04:05"
+    // Enable log file writing
+    logger.Writer.Enable = true
+    // ...
+}
+```
