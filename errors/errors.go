@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 12:42:57
- * @LastEditTime: 2025-06-08 14:37:04
+ * @LastEditTime: 2025-06-09 10:29:23
  * @LastEditors: nijineko
  * @Description: noa errors package
  * @FilePath: \noa\errors\errors.go
@@ -21,10 +21,6 @@ const (
 type Error struct {
 	Err   error     // base error
 	Stack []uintptr // stack trace
-}
-
-func (e *Error) StackString() {
-	panic("unimplemented")
 }
 
 /**
