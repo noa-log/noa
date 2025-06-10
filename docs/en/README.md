@@ -12,5 +12,5 @@ go get -u github.com/noa-log/noa
 - [Register Handle](handle.md)
 - [Wrap Errors](wrap_errors.md)
 - [Add Color and Formatting to Text](colorize.md)
-- [Configure Scheduled Tasks]()
-- [Integrate with Third-Party Libraries]()
+- [Set Write Encoder](encoder.md)
+- [Configure Scheduled Tasks](timer_tasks.md)

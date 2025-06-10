@@ -19,4 +19,4 @@ func main() {
 }
 ```
 
-For more information about the `github.com/noa-log/colorize` library, please refer to its [Documentation](https://github.com/noa-log/colorize/blob/main/README.md)
+For more information about the `github.com/noa-log/colorize` package, please refer to its [Documentation](https://github.com/noa-log/colorize/blob/main/README.md)
