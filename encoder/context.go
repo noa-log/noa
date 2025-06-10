@@ -8,11 +8,14 @@
  */
 package encoder
 
+import "time"
+
 // encoder context struct
 type Context struct {
-	Level  int    // Log level
-	Source string // Log source
-	Data   []any  // Datas
+	Time   time.Time // Log time
+	Level  int       // Log level
+	Source string    // Log source
+	Data   []any     // Datas
 
 	ExtendKeys map[string]any // extend keys for custom data
 }
@@ -24,8 +27,9 @@ type Context struct {
  * @param {[]any} Data data to log
  * @return {*Context} new encoder context
  */
-func NewContext(Level int, Source string, Data []any) *Context {
+func NewContext(Time time.Time, Level int, Source string, Data []any) *Context {
 	return &Context{
+		Time:       Time,
 		Level:      Level,
 		Source:     Source,
 		Data:       Data,

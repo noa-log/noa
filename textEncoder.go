@@ -11,7 +11,6 @@ package noa
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/noa-log/colorize"
 	"github.com/noa-log/noa/encoder"
@@ -90,7 +89,7 @@ func generateTextPrintData(Log *LogConfig, c *encoder.Context, NewlineConfig Tex
 
 	// Add time
 	PrintData = append(PrintData, colorize.CyanText(
-		time.Now().Format(Log.TimeFormat),
+		c.Time.Format(Log.TimeFormat),
 	))
 
 	// Add log level

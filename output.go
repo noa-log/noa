@@ -9,6 +9,8 @@
 package noa
 
 import (
+	"time"
+
 	"github.com/noa-log/noa/encoder"
 	"github.com/noa-log/noa/errors"
 )
@@ -98,7 +100,7 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 	}
 
 	// Create encoder context
-	EncoderContext := encoder.NewContext(Level, Source, Data)
+	EncoderContext := encoder.NewContext(time.Now(), Level, Source, Data)
 
 	// print log data
 	l.Encoder.Print.Print(EncoderContext)
