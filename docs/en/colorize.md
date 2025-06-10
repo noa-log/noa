@@ -1,7 +1,7 @@
 # Add Color and Formatting to Text
 Noa uses the `github.com/noa-log/colorize` library to add color and formatting to text. You can control whether to remove color and formatting before printing by configuring the `RemoveColor` property of the log instance.
 
-## 使用示例
+## Usage Example
 ```go
 package main
 

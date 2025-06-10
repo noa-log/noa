@@ -1,5 +1,5 @@
 # Print Logs
-Noa supports quickly printing logs at various levels. You can also use the `Print()` and `Println()` methods to print custom logs.
+Noa supports quickly printing logs at various levels. You can also use the `Print()` methods to print custom logs.
 
 ## Quick Log Print
 ```go
@@ -43,7 +43,7 @@ func main() {
 ```
 
 ## Printing Custom Logs
-Noa supports using the `Print()` and `Println()` methods to print custom log messages.
+Noa supports using the `Print()` methods to print custom log messages.
 ```go
 package main
 
@@ -58,7 +58,7 @@ func main() {
 
     // Print custom logs
     logger.Print(noa.INFO, "Test", "This is a custom log")
-    logger.Println(noa.INFO, "Test", "This is a custom log with a newline")
+    logger.Print(noa.INFO, "Test", "This is a custom log with a newline")
 
     // Bypass error wrapping and print the error directly
     err := errors.New("An example error")
