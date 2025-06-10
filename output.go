@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 10:59:01
- * @LastEditTime: 2025-06-10 12:13:36
+ * @LastEditTime: 2025-06-10 22:13:23
  * @LastEditors: nijineko
  * @Description: log output package
  * @FilePath: \noa\output.go
@@ -9,12 +9,8 @@
 package noa
 
 import (
-	"fmt"
-	"time"
-
-	"github.com/noa-log/colorize"
+	"github.com/noa-log/noa/encoder"
 	"github.com/noa-log/noa/errors"
-	"github.com/noa-log/noa/tools"
 )
 
 /**
@@ -23,7 +19,7 @@ import (
  * @param {...any} Data print data
  */
 func (l *LogConfig) Debug(Source string, Data ...any) {
-	l.Println(DEBUG, Source, Data...)
+	l.Print(DEBUG, Source, Data...)
 }
 
 /**
@@ -32,7 +28,7 @@ func (l *LogConfig) Debug(Source string, Data ...any) {
  * @param {...any} Data print data
  */
 func (l *LogConfig) Info(Source string, Data ...any) {
-	l.Println(INFO, Source, Data...)
+	l.Print(INFO, Source, Data...)
 }
 
 /**
@@ -41,7 +37,7 @@ func (l *LogConfig) Info(Source string, Data ...any) {
  * @param {...any} Data print data
  */
 func (l *LogConfig) Warning(Source string, Data ...any) {
-	l.Println(WARNING, Source, Data...)
+	l.Print(WARNING, Source, Data...)
 }
 
 /**
@@ -58,7 +54,7 @@ func (l *LogConfig) Error(Source string, Data ...any) {
 		}
 	}
 
-	l.Println(ERROR, Source, Data...)
+	l.Print(ERROR, Source, Data...)
 }
 
 /**
@@ -75,26 +71,7 @@ func (l *LogConfig) Fatal(Source string, Data ...any) {
 		}
 	}
 
-	l.Println(FATAL, Source, Data...)
-}
-
-/**
- * @description: Print log with newline
- * @param {int} Level Log level
- * @param {string} Source Log source (e.g., file name, function name)
- * @param {...any} Data print data
- */
-func (l *LogConfig) Println(Level int, Source string, Data ...any) {
-	// Check if the last element is a string and ends with a newline
-	if l.AutoLastNewline && len(Data) > 0 {
-		if StrValue, ok := Data[len(Data)-1].(string); ok && len(StrValue) > 0 && StrValue[len(StrValue)-1] == '\n' {
-			l.Print(Level, Source, Data...)
-			return
-		}
-	}
-
-	Data = append(Data, "\n")
-	l.Print(Level, Source, Data...)
+	l.Print(FATAL, Source, Data...)
 }
 
 /**
@@ -120,75 +97,21 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 		}
 	}
 
-	var PrintData []any
+	// Create encoder context
+	EncoderContext := encoder.NewContext(Level, Source, Data)
 
-	// Add time
-	PrintData = append(PrintData, colorize.CyanText(
-		time.Now().Format(l.TimeFormat),
-	))
-
-	// Add log level
-	switch Level {
-	case DEBUG:
-		PrintData = append(PrintData, colorize.GrayText("DEBUG"))
-	case INFO:
-		PrintData = append(PrintData, colorize.BlueText("INFO"))
-	case WARNING:
-		PrintData = append(PrintData, colorize.YellowText("WARNING"))
-	case ERROR:
-		PrintData = append(PrintData, colorize.RedText("ERROR"))
-	case FATAL:
-		PrintData = append(PrintData, colorize.MagentaText("FATAL"))
-	}
-
-	// Add source
-	PrintData = append(PrintData, "["+Source+"]")
-
-	// Add data
-	PrintData = append(PrintData, Data...)
-
-	// Append the stack trace when wrapping the errors
-	if l.Errors.StackTrace {
-		ErrorStackData := make([]any, 0, len(PrintData))
-		for _, Value := range PrintData {
-			if WrapError, ok := Value.(*errors.Error); ok {
-				// Append the stack trace to the data
-				ErrorStackData = append(ErrorStackData, Value, "\n", WrapError.StackFormat())
-			} else {
-				// Append the original value
-				ErrorStackData = append(ErrorStackData, Value)
-			}
-		}
-
-		PrintData = ErrorStackData
-	}
-
-	// Remove color data
-	RemoveColorData := make([]any, len(PrintData))
-	for Index, Value := range PrintData {
-		if StrValue, ok := Value.(string); ok {
-			RemoveColorData[Index] = colorize.Remove(StrValue)
-		} else {
-			RemoveColorData[Index] = Value
-		}
-	}
-	// if colorRemove is true, use the data without color
-	if l.RemoveColor {
-		PrintData = RemoveColorData
-	}
-
-	// Print log
-	fmt.Print(tools.PadSpaceArray(PrintData)...)
+	// print log data
+	l.Encoder.Print.Print(EncoderContext)
 
 	// Write to file if enabled
 	if l.Writer.Enable {
-		LogFileHandle, err := l.Writer.openFile(l.Writer.Encoder.FileExtension())
+		LogFileHandle, err := l.Writer.openFile(l.Encoder.Write.WriteFileExtension())
 		if err != nil {
 			panic(err)
 		}
 
 		// Write log to file
-		if err := l.Writer.Encoder.Write(LogFileHandle, RemoveColorData); err != nil {
+		if err := l.Encoder.Write.Write(LogFileHandle, EncoderContext); err != nil {
 			return
 		}
 	}

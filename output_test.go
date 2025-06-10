@@ -17,12 +17,11 @@ func TestPrintLog(t *testing.T) {
 	Log := NewLog()
 
 	Log.Print(DEBUG, "Test", "This is a debug log")
-	Log.Print(DEBUG, "Test", "The previous log line was not printed with a newline", "\n")
-	Log.Println(DEBUG, "Test", "This is a debug log")
-	Log.Println(INFO, "Test", "This is an info log")
-	Log.Println(WARNING, "Test", "This is a warning log")
-	Log.Println(ERROR, "Test", "This is an error log")
-	Log.Println(FATAL, "Test", "This is a fatal log")
+	Log.Print(DEBUG, "Test", "This is a debug log")
+	Log.Print(INFO, "Test", "This is an info log")
+	Log.Print(WARNING, "Test", "This is a warning log")
+	Log.Print(ERROR, "Test", "This is an error log")
+	Log.Print(FATAL, "Test", "This is a fatal log")
 }
 
 func TestPrintLevelLog(t *testing.T) {
