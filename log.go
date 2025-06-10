@@ -11,6 +11,9 @@ package noa
 import (
 	"os"
 	"time"
+
+	"github.com/noa-log/noa/file/encoder"
+	"github.com/noa-log/noa/file/encoder/text"
 )
 
 // default log levels
@@ -31,9 +34,10 @@ type LogConfigErrors struct {
 
 // Log config writer structure
 type LogConfigWriter struct {
-	Enable     bool   // enable log file writing
-	FolderPath string // folder path for log files
-	TimeFormat string // time format for log file names
+	Enable     bool            // enable log file writing
+	FolderPath string          // folder path for log files
+	TimeFormat string          // time format for log file names
+	Encoder    encoder.Encoder // encoder for log file writing
 
 	file map[string]*os.File // log file handles
 }
@@ -57,9 +61,9 @@ type LogConfig struct {
  */
 func NewLog() *LogConfig {
 	Config := &LogConfig{
-		Level:       DEBUG,
-		RemoveColor: false,
-		TimeFormat:  "2006-01-02 15:04:05",
+		Level:           DEBUG,
+		RemoveColor:     false,
+		TimeFormat:      "2006-01-02 15:04:05",
 		AutoLastNewline: true,
 		Errors: LogConfigErrors{
 			StackTrace: true,
@@ -69,6 +73,7 @@ func NewLog() *LogConfig {
 			Enable:     true,
 			FolderPath: "./logs",
 			TimeFormat: "2006-01-02",
+			Encoder:    text.NewTextEncoder(),     // default encoder is TextEncoder
 			file:       make(map[string]*os.File), // initialize file map
 		},
 	}

@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 10:59:01
- * @LastEditTime: 2025-06-08 16:54:34
+ * @LastEditTime: 2025-06-10 12:13:36
  * @LastEditors: nijineko
  * @Description: log output package
  * @FilePath: \noa\output.go
@@ -14,6 +14,7 @@ import (
 
 	"github.com/noa-log/colorize"
 	"github.com/noa-log/noa/errors"
+	"github.com/noa-log/noa/tools"
 )
 
 /**
@@ -162,9 +163,6 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 		PrintData = ErrorStackData
 	}
 
-	// Pad spaces in the data slice
-	PrintData = padSpace(PrintData)
-
 	// Remove color data
 	RemoveColorData := make([]any, len(PrintData))
 	for Index, Value := range PrintData {
@@ -180,7 +178,7 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 	}
 
 	// Print log
-	fmt.Print(PrintData...)
+	fmt.Print(tools.PadSpaceArray(PrintData)...)
 
 	// Write to file if enabled
 	if l.Writer.Enable {
@@ -190,7 +188,7 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 		}
 
 		// Write log to file
-		if _, err := fmt.Fprint(LogFileHandle, RemoveColorData...); err != nil {
+		if err := l.Writer.Encoder.Write(LogFileHandle, RemoveColorData); err != nil {
 			return
 		}
 	}
@@ -201,25 +199,4 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 			panic(err)
 		}
 	}
-}
-
-/**
- * @description: Pad spaces in the data slice
- * @param {[]any} Data Data slice to pad spaces in
- * @return {[]any} Padded data slice
- */
-func padSpace(Data []any) []any {
-	ResultData := make([]any, 0, len(Data)*2-1)
-	for Index, Value := range Data {
-		ResultData = append(ResultData, Value)
-		if Index < len(Data)-1 {
-			// If the value is a string and ends with a newline, skip adding a space
-			if StrValue, ok := Value.(string); ok && (len(StrValue) > 0 && StrValue[len(StrValue)-1] == '\n') {
-				continue
-			}
-
-			ResultData = append(ResultData, " ")
-		}
-	}
-	return ResultData
 }
