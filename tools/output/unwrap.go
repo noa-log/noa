@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-10 12:44:11
- * @LastEditTime: 2025-06-10 12:45:27
+ * @LastEditTime: 2025-06-10 13:22:42
  * @LastEditors: nijineko
  * @Description: output print data unwrap utility
  * @FilePath: \noa\tools\output\unwrap.go
@@ -23,7 +23,7 @@ import (
  * @return {string} parsed log source
  * @return {[]any} unwrapped print data (remove newline at the end)
  */
-func UnwrapPrintData(Log noa.LogConfig, PrintData []any) (time.Time, int, string, []any) {
+func UnwrapPrintData(Log *noa.LogConfig, PrintData []any) (time.Time, int, string, []any) {
 	var (
 		Time       time.Time
 		Level      int
