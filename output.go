@@ -182,7 +182,7 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 
 	// Write to file if enabled
 	if l.Writer.Enable {
-		LogFileHandle, err := l.Writer.openFile()
+		LogFileHandle, err := l.Writer.openFile(l.Writer.Encoder.FileExtension())
 		if err != nil {
 			panic(err)
 		}

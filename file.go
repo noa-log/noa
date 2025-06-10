@@ -16,10 +16,11 @@ import (
 
 /**
  * @description: Open a log file handle
+ * @param {string} FileExt file extension
  * @return {*os.File} log file handle
  * @return {error} error
  */
-func (lcw *LogConfigWriter) openFile() (*os.File, error) {
+func (lcw *LogConfigWriter) openFile(FileExt string) (*os.File, error) {
 	FileNameTime := time.Now().Format(lcw.TimeFormat)
 	// check file handle already exists
 	if _, ok := lcw.file[FileNameTime]; ok {
@@ -27,7 +28,7 @@ func (lcw *LogConfigWriter) openFile() (*os.File, error) {
 	}
 
 	// create new file handle
-	FileName := FileNameTime + ".log"
+	FileName := FileNameTime + FileExt
 	FilePath := filepath.Join(lcw.FolderPath, FileName)
 	// create folder if it doesn't exist
 	if _, err := os.Stat(lcw.FolderPath); os.IsNotExist(err) {

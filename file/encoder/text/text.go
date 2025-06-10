@@ -27,6 +27,14 @@ func NewTextEncoder() *TextEncoder {
 }
 
 /**
+ * @description: Get file extension for the encoded file
+ * @return {string} file extension
+ */
+func (te *TextEncoder) FileExtension() string {
+	return ".log"
+}
+
+/**
  * @description: Text encode write method
  * @param {*os.File} FileHandle file handle
  * @param {[]any} PrintData data to encode
