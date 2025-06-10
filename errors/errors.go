@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 12:42:57
- * @LastEditTime: 2025-06-09 10:29:23
+ * @LastEditTime: 2025-06-10 11:38:50
  * @LastEditors: nijineko
  * @Description: noa errors package
  * @FilePath: \noa\errors\errors.go
@@ -21,6 +21,8 @@ const (
 type Error struct {
 	Err   error     // base error
 	Stack []uintptr // stack trace
+
+	stackFrames []StackFrame // stack frames
 }
 
 /**
@@ -58,14 +60,6 @@ func (e *Error) Error() string {
 }
 
 /**
- * @description: Get the stack trace of the error
- * @return {[]uintptr} stack trace
- */
-func (e *Error) StackTrace() []uintptr {
-	return e.Stack
-}
-
-/**
  * @description: Get the stack trace as a formatted string
  * @return {string} formatted stack trace
  */
@@ -74,22 +68,15 @@ func (e *Error) StackFormat() string {
 		return ""
 	}
 
-	Frames := runtime.CallersFrames(e.Stack)
+	Frames := e.StackFrames()
 	var StackString string
-	for {
-		Frame, More := Frames.Next()
-		if Frame.Function == "" {
-			break
-		}
+	for _, Frame := range Frames {
 		StackString += fmt.Sprintf("%s\n\t%s:%d +0x%x\n",
 			Frame.Function,
 			Frame.File,
 			Frame.Line,
 			Frame.PC-Frame.Entry,
 		)
-		if !More {
-			break
-		}
 	}
 
 	return StackString
