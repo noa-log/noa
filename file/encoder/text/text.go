@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-10 11:59:30
- * @LastEditTime: 2025-06-10 12:38:28
+ * @LastEditTime: 2025-06-10 13:01:50
  * @LastEditors: nijineko
  * @Description: text log encoder
  * @FilePath: \noa\file\encoder\text\text.go
@@ -27,10 +27,9 @@ func NewTextEncoder() *TextEncoder {
 }
 
 /**
- * @description: Text encode method
+ * @description: Text encode write method
  * @param {*os.File} FileHandle file handle
  * @param {[]any} PrintData data to encode
- * @return {[]byte} encoded data
  * @return {error} error
  */
 func (te *TextEncoder) Write(FileHandle *os.File, PrintData []any) error {
