@@ -63,7 +63,7 @@ func (e *Error) Unwrap() error {
  * @description: Get error message
  * @return {string} error message
  */
-func (e *Error) Error() string {
+func (e Error) Error() string {
 	if e.Err == nil {
 		return ""
 	}
