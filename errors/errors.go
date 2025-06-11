@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 12:42:57
- * @LastEditTime: 2025-06-10 11:38:50
+ * @LastEditTime: 2025-06-11 10:26:55
  * @LastEditors: nijineko
  * @Description: noa errors package
  * @FilePath: \noa\errors\errors.go
@@ -9,6 +9,7 @@
 package errors
 
 import (
+	"errors"
 	"fmt"
 	"runtime"
 )
@@ -23,6 +24,16 @@ type Error struct {
 	Stack []uintptr // stack trace
 
 	stackFrames []StackFrame // stack frames
+}
+
+/**
+ * @description: Create a new error
+ * @param {string} Text error message
+ * @param {int} Skip number of stack frames to skip (default is 1)
+ * @return {*Error} wrapped error
+ */
+func New(Text string, Skip int) *Error {
+	return Wrap(errors.New(Text), Skip+1)
 }
 
 /**
