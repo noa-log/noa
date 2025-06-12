@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 12:42:57
- * @LastEditTime: 2025-06-11 10:26:55
+ * @LastEditTime: 2025-06-12 11:10:17
  * @LastEditors: nijineko
  * @Description: noa errors package
  * @FilePath: \noa\errors\errors.go
@@ -14,7 +14,7 @@ import (
 	"runtime"
 )
 
-const (
+var (
 	MAX_STACK_DEPTH = 64
 )
 
@@ -49,6 +49,23 @@ func Wrap(Err error, Skip int) *Error {
 		Err:   Err,
 		Stack: Stack[:Length],
 	}
+}
+
+/**
+ * @description: Check if the error is of a specific type
+ * @param {Error} Err error to check
+ * @param {Error} Target target error
+ * @return {bool} true if Err is of type Target, false otherwise
+ */
+func Is(Err *Error, Target *Error) bool {
+	if Err.Err == nil {
+		return false
+	}
+	if Target.Err == nil {
+		return false
+	}
+
+	return errors.Is(Err.Err, Target.Err)
 }
 
 /**
