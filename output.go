@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 10:59:01
- * @LastEditTime: 2025-06-10 22:13:23
+ * @LastEditTime: 2025-06-15 10:49:36
  * @LastEditors: nijineko
  * @Description: log output package
  * @FilePath: \noa\output.go
@@ -48,14 +48,6 @@ func (l *LogConfig) Warning(Source string, Data ...any) {
  * @param {...any} Data print data
  */
 func (l *LogConfig) Error(Source string, Data ...any) {
-	for Index, Value := range Data {
-		// If the type is error, then wrap it
-		if Error, ok := Value.(error); ok {
-			WrapError := errors.Wrap(Error, l.Errors.CallerSkip)
-			Data[Index] = WrapError
-		}
-	}
-
 	l.Print(ERROR, Source, Data...)
 }
 
@@ -65,14 +57,6 @@ func (l *LogConfig) Error(Source string, Data ...any) {
  * @param {...any} Data print data
  */
 func (l *LogConfig) Fatal(Source string, Data ...any) {
-	for Index, Value := range Data {
-		// If the type is error, then wrap it
-		if Error, ok := Value.(error); ok {
-			WrapError := errors.Wrap(Error, l.Errors.CallerSkip)
-			Data[Index] = WrapError
-		}
-	}
-
 	l.Print(FATAL, Source, Data...)
 }
 
@@ -85,6 +69,17 @@ func (l *LogConfig) Fatal(Source string, Data ...any) {
 func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 	if Level < l.Level || Level == OFF {
 		return
+	}
+
+	// wrap errors
+	if Level == ERROR || Level == FATAL {
+		for Index, Value := range Data {
+			// If the type is error, then wrap it
+			if Error, ok := Value.(error); ok {
+				WrapError := errors.Wrap(Error, l.Errors.CallerSkip)
+				Data[Index] = WrapError
+			}
+		}
 	}
 
 	// Execute before handles

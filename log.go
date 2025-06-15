@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 10:29:01
- * @LastEditTime: 2025-06-10 22:09:04
+ * @LastEditTime: 2025-06-15 10:56:23
  * @LastEditors: nijineko
  * @Description: noa log package
  * @FilePath: \noa\log.go
@@ -48,12 +48,12 @@ type LogConfigEncoder struct {
 
 // Log config structure
 type LogConfig struct {
-	Level           int              // log level
-	RemoveColor     bool             // remove color from log output
-	TimeFormat      string           // log prefix time format
-	Errors          LogConfigErrors  // error configuration for logging
-	Writer          LogConfigWriter  // writer configuration for logging to files
-	Encoder         LogConfigEncoder // log encoder
+	Level       int              // log level
+	RemoveColor bool             // remove color from log output
+	TimeFormat  string           // log prefix time format
+	Errors      LogConfigErrors  // error configuration for logging
+	Writer      LogConfigWriter  // writer configuration for logging to files
+	Encoder     LogConfigEncoder // log encoder
 
 	beforeHandles []BeforeHandleFunc // functions to run before logging
 	bfterHandles  []AfterHandleFunc  // functions to run after logging
@@ -65,12 +65,12 @@ type LogConfig struct {
  */
 func NewLog() *LogConfig {
 	Config := &LogConfig{
-		Level:           DEBUG,
-		RemoveColor:     false,
-		TimeFormat:      "2006-01-02 15:04:05",
+		Level:       DEBUG,
+		RemoveColor: false,
+		TimeFormat:  "2006-01-02 15:04:05",
 		Errors: LogConfigErrors{
 			StackTrace: true,
-			CallerSkip: 3, // default skip 3 frames to find the caller
+			CallerSkip: 4, // default skip 4 frames to find the caller
 		},
 		Writer: LogConfigWriter{
 			Enable:     true,

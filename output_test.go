@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 13:16:22
- * @LastEditTime: 2025-06-08 15:00:38
+ * @LastEditTime: 2025-06-15 10:57:22
  * @LastEditors: nijineko
  * @Description: log output test
  * @FilePath: \noa\output_test.go
@@ -36,11 +36,12 @@ func TestPrintLevelLog(t *testing.T) {
 
 func TestPrintErrorLog(t *testing.T) {
 	Log := NewLog()
-	Log.Errors.CallerSkip = 3
+	Log.Errors.CallerSkip = 4
 
 	// Test with a simple error
 	err := errors.New("This is a test error")
 	Log.Error("Test", err, "Test append")
+	Log.Fatal("Test", err)
 
 	// Test with multiple errors
 	err1 := errors.New("This is the first test error")
