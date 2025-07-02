@@ -45,5 +45,12 @@ func main() {
 - 支持集成到部分第三方库中，如`Gin`、`Gorm`等
 - 通过将错误进行包装，提供更好的错误上下文信息
 
+## 集成
+以下是一些官方维护的集成库，提供了Noa与常用框架和库的集成支持：
+- [noa-gin](https://github.com/noa-log/noa-gin/blob/main/README_CN.md) - 将 Noa 集成到 Gin 框架
+- [noa-echo](https://github.com/noa-log/noa-echo/blob/main/README_CN.md) - 将 Noa 集成到 Echo 框架
+- [noa-gorm](https://github.com/noa-log/noa-gorm/blob/main/README_CN.md) - 将 Noa 集成到 Gorm
+- [noa-sentry](https://github.com/noa-log/noa-sentry/blob/main/README_CN.md) - 将 Noa 集成到 Sentry
+
 ## 许可
 本项目基于[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)协议开源。使用时请遵守协议的条款。
