@@ -76,6 +76,11 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 		for Index, Value := range Data {
 			// If the type is error, then wrap it
 			if Error, ok := Value.(error); ok {
+				// Check if it's a wrapped error, if so, skip wrapping
+				if _, ok := Value.(*errors.Error); ok {
+					continue
+				}
+
 				WrapError := errors.Wrap(Error, l.Errors.CallerSkip)
 				Data[Index] = WrapError
 			}
