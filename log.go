@@ -1,7 +1,7 @@
 /*
  * @Author: nijineko
  * @Date: 2025-06-08 10:29:01
- * @LastEditTime: 2025-06-15 10:56:23
+ * @LastEditTime: 2026-07-15 16:00:35
  * @LastEditors: nijineko
  * @Description: noa log package
  * @FilePath: \noa\log.go
@@ -31,6 +31,11 @@ type LogConfigErrors struct {
 	CallerSkip int  // skip number of stack frames to find the caller
 }
 
+// Log config console structure
+type LogConfigConsole struct {
+	Enable bool // enable console output
+}
+
 // Log config writer structure
 type LogConfigWriter struct {
 	Enable     bool   // enable log file writing
@@ -52,6 +57,7 @@ type LogConfig struct {
 	RemoveColor bool             // remove color from log output
 	TimeFormat  string           // log prefix time format
 	Errors      LogConfigErrors  // error configuration for logging
+	Console     LogConfigConsole // console configuration for logging
 	Writer      LogConfigWriter  // writer configuration for logging to files
 	Encoder     LogConfigEncoder // log encoder
 
@@ -71,6 +77,9 @@ func NewLog() *LogConfig {
 		Errors: LogConfigErrors{
 			StackTrace: true,
 			CallerSkip: 4, // default skip 4 frames to find the caller
+		},
+		Console: LogConfigConsole{
+			Enable: true,
 		},
 		Writer: LogConfigWriter{
 			Enable:     true,

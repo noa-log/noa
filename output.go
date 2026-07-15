@@ -103,7 +103,9 @@ func (l *LogConfig) Print(Level int, Source string, Data ...any) {
 	EncoderContext := encoder.NewContext(time.Now(), Level, Source, Data)
 
 	// print log data
-	l.Encoder.Print.Print(EncoderContext)
+	if l.Console.Enable {
+		l.Encoder.Print.Print(EncoderContext)
+	}
 
 	// Write to file if enabled
 	if l.Writer.Enable {

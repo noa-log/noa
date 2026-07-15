@@ -9,6 +9,7 @@ Noa supports highly flexible configuration options, allowing you to set the beha
 |    TimeFormat     |     Timestamp format     | 2006-01-02 15:04:05 |                                Uses Go's time format                                 |
 | Errors.StackTrace | Print error stack trace  |        true         |                                                                                      |
 | Errors.CallerSkip |   Stack depth to skip    |          4          |                                                                                      |
+|  Console.Enable   |  Enable console output   |        true         |                                                                                      |
 |   Writer.Enable   | Enable log file writing  |        true         |                                                                                      |
 | Writer.FolderPath |   Log file folder path   |       ./logs        |                                                                                      |
 | Writer.TimeFormat | Log filename time format |     2006-01-02      |                Uses Go's time format, affects automatic file rotation                |
